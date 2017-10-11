@@ -14,7 +14,7 @@ public interface PersonDAO {
 	/*
 	 * get one person with similar name.
 	 */
-	public Person getPerson(String name);
+	public Person getPerson(String name) throws SQLException;
 	/*
 	 * get all persons
 	 */

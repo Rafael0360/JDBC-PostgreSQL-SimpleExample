@@ -29,6 +29,7 @@ public class PersonJDBC implements PersonDAO{
 		// 3 = third '?'
 		ps.setString(3, person.getBirthday());
 		
+		//use execute update when the database return nothing
 		ps.executeUpdate();
 		
 	}
@@ -38,8 +39,14 @@ public class PersonJDBC implements PersonDAO{
 		
 	}
 
-	public Person getPerson(String name) {
-		// TODO Auto-generated method stub
+	public Person getPerson(String name) throws SQLException {
+		//get all persons
+		ArrayList<Person> array = getAllPersons();
+		for (Person person : array) {
+			if(person.getName().equals(name)) {
+				return person;
+			}
+		}
 		return null;
 	}
 

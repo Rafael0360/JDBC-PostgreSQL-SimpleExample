@@ -1,5 +1,6 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,8 +16,20 @@ public class PersonJDBC implements PersonDAO{
 		this.connection = DriverManager.getConnection(url, user, password);
 	}
 
-	public void addPerson(Person person) {
-		// TODO Auto-generated method stub
+	public void addPerson(Person person) throws SQLException {
+		//query of postgresql
+		String sql = "insert into person(name, identity, birthday)"
+				+ "values (?,?,?)";
+		
+		PreparedStatement ps = this.connection.prepareStatement(sql);
+		// 1 = first '?' 
+		ps.setString(1, person.getName());
+		// 2 - second '?'
+		ps.setString(2, person.getIdentity());
+		// 3 = third '?'
+		ps.setString(3, person.getBirthday());
+		
+		ps.executeUpdate();
 		
 	}
 
@@ -46,6 +59,8 @@ public class PersonJDBC implements PersonDAO{
 			person.setBirthday(result.getString("birthday"));
 			array.add(person);
 		}
+		result.close();
 		return array;
+		
 	}
 }

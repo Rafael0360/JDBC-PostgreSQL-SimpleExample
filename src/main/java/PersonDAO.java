@@ -6,7 +6,7 @@ public interface PersonDAO {
 	/*
 	 * add person in database
 	 */
-	public void addPerson(Person person);
+	public void addPerson(Person person) throws SQLException;
 	/*
 	 * remove person of database
 	 */

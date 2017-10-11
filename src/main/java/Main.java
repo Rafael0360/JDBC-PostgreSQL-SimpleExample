@@ -11,10 +11,19 @@ public class Main {
 		//your password. root is default
 		String password = "root";
 		PersonJDBC pjdbc = new PersonJDBC(url, user, password);
+		
+		Person person = new Person();
+		person.setName("Chloe");
+		person.setIdentity("ZAA21");
+		person.setBirthday("10/10/1980");
+		pjdbc.addPerson(person);
+		
+		
 		ArrayList<Person> array = pjdbc.getAllPersons();
 		
-		for (Person person : array) {
-			System.out.println(person.getName()+ ", your id is "+ person.getId());
+		for (Person i : array) {
+			System.out.println(i.getName()+ ", your id is "+ i.getId()+ 
+					", "+ i.getBirthday());
 		}
 		
 

@@ -10,7 +10,7 @@ public interface PersonDAO {
 	/*
 	 * remove person of database
 	 */
-	public void removePerson(Person person);
+	public void removePerson(Person person) throws SQLException;
 	/*
 	 * get one person with similar name.
 	 */

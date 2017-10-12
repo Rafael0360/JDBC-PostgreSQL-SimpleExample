@@ -3,6 +3,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class PersonJDBC implements PersonDAO{
@@ -21,7 +22,9 @@ public class PersonJDBC implements PersonDAO{
 		String sql = "insert into person(name, identity, birthday)"
 				+ "values (?,?,?)";
 		
-		PreparedStatement ps = this.connection.prepareStatement(sql);
+		PreparedStatement ps = this.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		
+		
 		// 1 = first '?' 
 		ps.setString(1, person.getName());
 		// 2 - second '?'
@@ -32,10 +35,20 @@ public class PersonJDBC implements PersonDAO{
 		//use execute update when the database return nothing
 		ps.executeUpdate();
 		
+		ResultSet generatedKeys =  ps.getGeneratedKeys();
+		if(generatedKeys.next()) {
+			person.setId(generatedKeys.getInt(1));
+		}
+		
+		
 	}
 
-	public void removePerson(Person person) {
-		// TODO Auto-generated method stub
+	public void removePerson(Person person) throws SQLException {
+		String sql = "delete from person where id_person = ?";
+		PreparedStatement ps = this.connection.prepareStatement(sql);
+		ps.setInt(1, person.getId());
+		ps.executeUpdate();
+		
 		
 	}
 
